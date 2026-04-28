@@ -17,19 +17,21 @@ public class CloudinaryService {
         this.cloudinary = cloudinary;
     }
 
+
     public String uploadImage(MultipartFile file) {
-        try {
-            Map uploadResult = cloudinary.uploader().upload(
-                    file.getBytes(),
-                    ObjectUtils.asMap(
-                            "folder", "portfolio"
-                    )
+    try {
+        Map uploadResult = cloudinary.uploader().upload(
+                file.getBytes(),
+                ObjectUtils.asMap(
+                        "folder", "portfolio",
+                        "resource_type", "auto"
+                )
             );
 
             return uploadResult.get("secure_url").toString();
 
         } catch (IOException e) {
-            throw new RuntimeException("Image upload failed");
+        throw new RuntimeException("File upload failed");
         }
     }
 }
