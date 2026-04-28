@@ -2,6 +2,7 @@ package com.example.nilesh.controller;
 
 import com.example.nilesh.entity.ContactMessage;
 import com.example.nilesh.repository.ContactRepository;
+import com.example.nilesh.service.EmailService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -11,14 +12,20 @@ import java.util.List;
 public class ContactController {
 
     private final ContactRepository contactRepository;
+    private final EmailService emailService;
 
-    public ContactController(ContactRepository contactRepository) {
+    public ContactController(ContactRepository contactRepository, EmailService emailService) {
         this.contactRepository = contactRepository;
+        this.emailService = emailService;
     }
 
     @PostMapping
     public ContactMessage sendMessage(@RequestBody ContactMessage message) {
-        return contactRepository.save(message);
+        ContactMessage savedMessage = contactRepository.save(message);
+
+        emailService.sendContactEmails(savedMessage);
+
+        return savedMessage;
     }
 
     @GetMapping
