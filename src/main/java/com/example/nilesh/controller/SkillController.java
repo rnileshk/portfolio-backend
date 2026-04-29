@@ -30,16 +30,22 @@ public class SkillController {
     public Skill updateSkill(@PathVariable Long id, @RequestBody Skill skill) {
 
         Skill oldSkill = skillRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Skill not found"));
+                .orElseThrow(() -> new RuntimeException("Skill not found with id: " + id));
 
         oldSkill.setName(skill.getName());
         oldSkill.setCategory(skill.getCategory());
+        oldSkill.setIcon(skill.getIcon());
 
         return skillRepository.save(oldSkill);
     }
 
     @DeleteMapping("/{id}")
     public String deleteSkill(@PathVariable Long id) {
+
+        if (!skillRepository.existsById(id)) {
+            throw new RuntimeException("Skill not found with id: " + id);
+        }
+
         skillRepository.deleteById(id);
         return "Skill deleted successfully";
     }
