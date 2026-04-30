@@ -23,7 +23,7 @@ public class ContactController {
     public ContactMessage sendMessage(@RequestBody ContactMessage message) {
         ContactMessage savedMessage = contactRepository.save(message);
 
-        emailService.sendContactEmails(savedMessage);
+        // emailService.sendContactEmails(savedMessage);
 
         return savedMessage;
     }
