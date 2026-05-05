@@ -13,11 +13,11 @@ import java.util.List;
 public class ContactController {
 
     private final ContactRepository contactRepository;
-    private final EmailService emailService;
+    // private final EmailService emailService;
 
     public ContactController(ContactRepository contactRepository, EmailService emailService) {
         this.contactRepository = contactRepository;
-        this.emailService = emailService;
+       // this.emailService = emailService;
     }
 
     @PostMapping
@@ -25,7 +25,7 @@ public class ContactController {
         ContactMessage savedMessage = contactRepository.save(message);
 
         try {
-            emailService.sendContactEmails(savedMessage);
+           // emailService.sendContactEmails(savedMessage);
         } catch (Exception e) {
             System.out.println("EMAIL ERROR: " + e.getMessage());
         }
